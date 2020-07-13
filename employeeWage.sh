@@ -20,6 +20,13 @@ function getWorkingHours()
         echo $workHrs
 }
 
+function calcDailyWage()
+{
+        local workHours=$1
+        wage=$(( $workHours*$empRatePerHr ))
+        echo $wage
+}
+
 
 while [[ $totalEmpHrs -lt $MAX_HRS_IN_MONTH && $totalWorkingDays -lt $numWorkingDays ]]
 do
@@ -27,6 +34,8 @@ do
         empCheck=$(( RANDOM%3 ))
         workHours=`getWorkingHours $empCheck`
         totalEmpHrs=$(( $totalEmpHrs+$workHours ))
+        dailyWage[$totalWorkingDays]=`calcDailyWage $workHours`
 done
 totalSalary=$(( $totalEmpHrs*$empRatePerHr ))
+echo ${dailyWage[@]}
 echo "Salary of all employees in a month is $totalSalary"
